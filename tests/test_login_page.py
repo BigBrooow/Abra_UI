@@ -1,5 +1,7 @@
 import requests as requests
 import time
+import db_queries
+from settings import VALID_EMAIL_SELLER
 
 from pages.locators import MainPageLocators, LoginPageLocators
 
@@ -20,6 +22,7 @@ def test_login(browser):
     assert response.status_code == 200, f"{response.status_code} is not our expectation"
     profile_btn = browser.find_element(*MainPageLocators.PROFILE_BTN)
     assert f"'{profile_btn}' is present"
+    assert len(db_queries.get_user_by_email(VALID_EMAIL_SELLER)) > 0
 
 
 def test_login_with_invalid_password(browser):
